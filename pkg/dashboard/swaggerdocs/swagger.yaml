@@ -3397,6 +3397,9 @@ definitions:
       gcpChaos:
         $ref: '#/definitions/v1alpha1.GCPChaosSpec'
         description: +optional
+      helloworldChaos:
+        $ref: '#/definitions/v1alpha1.HelloWorldChaosSpec'
+        description: +optional
       historyLimit:
         description: |-
           +optional
@@ -3969,6 +3972,45 @@ definitions:
           +kubebuilder:default=GET
         type: string
       url:
+        type: string
+    type: object
+  v1alpha1.HelloWorldChaosSpec:
+    properties:
+      containerNames:
+        description: |-
+          ContainerNames indicates list of the name of affected container.
+          If not set, the first container will be injected
+          +optional
+        items:
+          type: string
+        type: array
+      duration:
+        description: |-
+          Duration represents the duration of the chaos
+          +optional
+        type: string
+      mode:
+        description: |-
+          Mode defines the mode to run chaos action.
+          Supported mode: one / all / fixed / fixed-percent / random-max-percent
+          +kubebuilder:validation:Enum=one;all;fixed;fixed-percent;random-max-percent
+        type: string
+      remoteCluster:
+        description: |-
+          RemoteCluster represents the remote cluster where the chaos will be deployed
+          +optional
+        type: string
+      selector:
+        $ref: '#/definitions/v1alpha1.PodSelectorSpec'
+        description: Selector is used to select pods that are used to inject chaos
+          action.
+      value:
+        description: |-
+          Value is required when the mode is set to `FixedMode` / `FixedPercentMode` / `RandomMaxPercentMode`.
+          If `FixedMode`, provide an integer of pods to do chaos action.
+          If `FixedPercentMode`, provide a number from 0-100 to specify the percent of pods the server can do chaos action.
+          IF `RandomMaxPercentMode`,  provide a number from 0-100 to specify the max percent of pods to do chaos action
+          +optional
         type: string
     type: object
   v1alpha1.IOChaosSpec:
@@ -5735,6 +5777,9 @@ definitions:
       gcpChaos:
         $ref: '#/definitions/v1alpha1.GCPChaosSpec'
         description: +optional
+      helloworldChaos:
+        $ref: '#/definitions/v1alpha1.HelloWorldChaosSpec'
+        description: +optional
       historyLimit:
         description: |-
           +optional
@@ -6089,6 +6134,9 @@ definitions:
         description: +optional
       gcpChaos:
         $ref: '#/definitions/v1alpha1.GCPChaosSpec'
+        description: +optional
+      helloworldChaos:
+        $ref: '#/definitions/v1alpha1.HelloWorldChaosSpec'
         description: +optional
       httpChaos:
         $ref: '#/definitions/v1alpha1.HTTPChaosSpec'
